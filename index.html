@@ -4,15 +4,9 @@
     <title>Introdução aos Modelos Lineares</title>
     <meta charset="utf-8">
     <meta name="author" content="Steven Dutt Ross" />
-    <link href="index_files/remark-css/example.css" rel="stylesheet" />
-    <script src="index_files/htmlwidgets/htmlwidgets.js"></script>
-    <script src="index_files/jquery/jquery.min.js"></script>
-    <script src="index_files/datatables-binding/datatables.js"></script>
-    <link href="index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
-    <script src="index_files/dt-core/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="tamu.css" type="text/css" />
-    <link rel="stylesheet" href="tamu-fonts.css" type="text/css" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -23,280 +17,18 @@ class: center, middle, inverse, title-slide
 
 ---
 
+  
 
 
 
-## Nesse curso vamos usar o R!
-
-![](https://www.r-project.org/Rlogo.png)
-[https://www.r-project.org/](https://www.r-project.org/)
-
----
-
-## Por que usar o R?
-&lt;P&gt;1 . O R é a principal ferramenta para estatística e para análise de dados. É mais do que um software estatístico, é uma linguagem de programação.
-&lt;P&gt;2. Você pode usá-lo facilmente em qualquer lugar.
-&lt;P&gt;3. É grátis. Você pode usa-lo em qualquer empresa, escola, em qualquer local sem ter que convencer o chefe a comprar uma licença.
-&lt;P&gt;4. Existem mais de 10.000 pacotes de contribuições de usuários disponíveis no site do R (cran). Muitos pacotes  são colocados pelos membros mais proeminentes de seus respectivos campos.
-&lt;P&gt;5. R tem uma grande (e crescente) comunidade de usuários. As listas de discussões fornecem acesso a muitos usuários e autores de pacotes que são especialistas em  seus campos.
-&lt;BR&gt;
-&lt;P&gt;OBS - Esses slides foram construídos no R
-
----
-
-## Por que usar o R?
-![](index_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
-&lt;BR&gt;
-Outras organizações que utilizam o R: IBGE, IPEA, FGV, IBOPE, Ministério do planejamento, Ministério da Fazenda, Ministério das Relações Exteriores, etc...
-
----
-
-## Análises Desenvolvidas no R no ano passado
-
-[Transparência](https://duttross.shinyapps.io/transparencia1/)
-
-[Engajamento Orçamentário](https://duttross.shinyapps.io/Engajamento/)
-
-[Mapa da Rocinha](https://dataunirio.github.io/Rocinha/)
-
-[Unirio em números](http://rpubs.com/StevenDuttRoss/unirioemnumeros)
-
-[Gráfico Interativo DATAUNIRIO](https://dataunirio.github.io/streetview/)
-
-[Gráfico Interativo GAE](http://gae.uniriotec.br/4/visualizacao.html)
-
-[Relatórios dos Alunos da Unirio](https://dataunirio.github.io/Trabalhos_alunos_UNIRIO/)
-
-[Análise Desenvolvida no R pelo aluno Gabriel Alves - Adm/Unirio](https://dashboardunirio.000webhostapp.com/)
-
----
-
-## Registros e variáveis 
-
-Os registros são objetos descritos por um conjunto de dados, podendo ser pessoas, animais, municípios, estados ou objetos.
-
-Uma variável é qualquer característica do registro. Uma variável pode assumir valores diferentes para registros diferentes
-
----
-
-
-## Classificação de variáveis (qualitativas e quantitativas)
-
-**Variáveis qualitativas**  posiciona um registro em um dos diversos grupos ou categorias. Também chamada de **Variável categórica**
-
-**Variáveis quantitativa**  assume valores númericos com os quais faz sentido efetuarem-se operações aritméticas, tais como adição e cálculo de médias. Os valores de uma variável quantitativa são usualmente registrados em uma unidade de medida, tal como segundos ou quilogramas 
-
-
----
-
-
-## Variáveis qualitativas e quantitativas
-
-Variável qualitativa **Nominal** não existe hierarquia/ordenação entre as categorias. Exemplos: *sexo, cor, bairro, fumante/não fumante, doente/sadio*.
-
-Variável qualitativa **Ordinal** existe uma hierarquia/ordenação entre as categorias. Exemplos: *escolaridade (1o, 2o, 3o graus), patente militar (soldado, cabo, sargento), avaliação (péssimo, ruim, regular, bom, ótimo)*
-
-Variável quantitativa **Discreta** características mensuráveis que podem assumir apenas um número finito ou infinito contável de valores e, assim, somente fazem sentido valores inteiros. Geralmente são o resultado de contagens. Exemplos: *número de filhos, número de pessoas na família, número de cigarros fumados por dia.*
-
-Variável quantitativa **Contínua** características mensuráveis que assumem valores em uma escala contínua, para as quais valores fracionais fazem sentido. Exemplos: *renda, preço, peso, altura, tempo.*
-
-.footnote[
-[1] [Fonte](http://leg.ufpr.br/~silvia/CE055/node8.html)
-]
-
----
-
-
-![](index_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
-.footnote[
-[1][Fonte](https://www.researchgate.net/publication/311607483_Teoria_Fundamentada_nos_Dados)
-]
----
-
-## Importante
-Para cada tipo de variável, vamos ter um tipo de modelo:
-
-Exemplos: Modelo Linear (Contínua), Modelo Binomial Negativo/Poisson (Discreta), Modelo Logit/Probit (Qualitativa Binária), Modelo multinomial (Nominal), Modelo Ordinal, etc...
-
-
----
-
-## O que é um banco de dados
-Iris Data: 50 flores de 03 espécies
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Width &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Width &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Species &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.3 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-Cada linha é um registro e cada coluna é um atributo (que chamamos de variável)
-
----
-
-## Outro exemplo: Swiss Data
-Províncias da Suiça
-<div id="htmlwidget-4d0fac70e3e7c45b6039" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4d0fac70e3e7c45b6039">{"x":{"filter":"none","fillContainer":false,"data":[["Courtelary","Delemont","Franches-Mnt","Moutier","Neuveville","Porrentruy","Broye","Glane","Gruyere","Sarine"],[80.2,83.1,92.5,85.8,76.9,76.1,83.8,92.4,82.4,82.9],[17,45.1,39.7,36.5,43.5,35.3,70.2,67.8,53.3,45.2],[15,6,5,12,17,9,16,14,12,16],[12,9,5,7,15,7,7,8,7,13],[9.96,84.84,93.4,33.77,5.16,90.57,92.85,97.16,97.67,91.38]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Fertility<\/th>\n      <th>Agriculture<\/th>\n      <th>Examination<\/th>\n      <th>Education<\/th>\n      <th>Catholic<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-
----
-
-## Outro exemplo: Midwest Data
-Informações Demográficas dos municípios do Meio-Oeste
-<div id="htmlwidget-8772443d6bfbc5aec7d8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8772443d6bfbc5aec7d8">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[561,562,563,564,565,566,567,568,569,570],["ADAMS","ALEXANDER","BOND","BOONE","BROWN","BUREAU","CALHOUN","CARROLL","CASS","CHAMPAIGN"],["IL","IL","IL","IL","IL","IL","IL","IL","IL","IL"],[19.6313918,11.2433076,17.0338194,17.2789539,14.475999,18.9046238,11.9173877,16.1971209,14.1076487,41.2958081],[11.0097759,27.3856467,10.85209,5.53601292,11.1432109,8.17928731,12.9323308,10.0270366,11.9143432,17.5627276]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PID<\/th>\n      <th>county<\/th>\n      <th>state<\/th>\n      <th>percollege<\/th>\n      <th>percadultpoverty<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-
----
-
-## Outro exemplo: Mtcars Data
-Performance de carros (10 informações)
-<div id="htmlwidget-29c7fbbf331ffde5a461" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-29c7fbbf331ffde5a461">{"x":{"filter":"none","fillContainer":false,"data":[["Mazda RX4","Mazda RX4 Wag","Datsun 710","Hornet 4 Drive","Hornet Sportabout","Valiant","Duster 360","Merc 240D","Merc 230","Merc 280"],[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2],[6,6,4,6,8,6,8,4,4,6],[160,160,108,258,360,225,360,146.7,140.8,167.6],[110,110,93,110,175,105,245,62,95,123],[3.9,3.9,3.85,3.08,3.15,2.76,3.21,3.69,3.92,3.92],[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44],[16.46,17.02,18.61,19.44,17.02,20.22,15.84,20,22.9,18.3],[0,0,1,1,0,1,0,1,1,1],[1,1,1,0,0,0,0,0,0,0],[4,4,4,3,3,3,3,4,4,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>mpg<\/th>\n      <th>cyl<\/th>\n      <th>disp<\/th>\n      <th>hp<\/th>\n      <th>drat<\/th>\n      <th>wt<\/th>\n      <th>qsec<\/th>\n      <th>vs<\/th>\n      <th>am<\/th>\n      <th>gear<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-
----
-
-## Geralmente acompanhado de um DICIONÁRIO DE DADOS
-Por exemplo:
-* mpg: Miles/(US) gallon
-* cyl: Number of cylinders
-* disp: Displacement (cu.in.)
-* hp: Gross horsepower
-* drat:Rear axle ratio
-* wt: Weight (1000 lbs)
-* qsec: 1/4 mile time
-* vs: V/S
-* am: Transmission (0 = automatic, 1 = manual)
-* gear: Number of forward gears
-* carb: Number of carburetors
-
----
-
-Por exemplo, esse banco de dados que estamos trabalhando tem 32 carros e 11 variáveis. No R isso pode ser verificado pelo comando dim(mtcars), e names(mtcars)
-
-```r
-dim(mtcars)
-```
-
-```
-## [1] 32 10
-```
-
-```r
-names(mtcars)
-```
-
-```
-##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"
-```
-
----
-
-## O objetivo é extrair informações de um banco de dados
-Por exemplo:
-Valor médio das variáveis HP &amp; mpg e tabela dos CyL dos carros desse banco de dados
-
-```
-## [1] 146.6875
-```
-
-```
-## [1] 20.09062
-```
-
-```
-## 
-##  4  6  8 
-## 11  7 14
-```
-
----
-
-## Outro modo de fazer isso é por meio de gráficos
-![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+## Como ajustar uma reta que a esses dados?
+&lt;img src="Index_files/figure-html/unnamed-chunk-1-1.png" width="672" /&gt;
 
 ---
 
 class: inverse, center, middle
 
-# Introdução aos Modelos Lineares 
-
-
+# Introdução aos Modelos de Regressão
 
 
 
@@ -312,7 +44,7 @@ class: inverse, center, middle
 
 
 .footnote[
-[1] Fonte deste segmento (slides 20 a 26): [© 2013 Denise Britz do Nascimento Silva](http://www.ence.ibge.gov.br/index.php/portal-graduacao/portal-graduacao-corpo-docente)
+[1] Fonte deste segmento: [© 2013 Denise Britz do Nascimento Silva](http://www.ence.ibge.gov.br/index.php/portal-graduacao/portal-graduacao-corpo-docente)
 ]
 
 ---
@@ -341,7 +73,10 @@ Representa a informação através de um número restrito de quantidades/variáv
 
 ## Modelo Estatístico
 
-### A interpretação/resumo das informações de um conjunto de dados demanda a formulação e identificação de padrões que possam representar as informações, evidenciando suas principais características, utilizando um número restrito de variáveis/quantidades.
+### A interpretação/resumo das informações de um conjunto de dados demanda a formulação e identificação de padrões que possam representar as informações.
+
+### Busca-se evidenciar suas principais características, utilizando um número restrito de variáveis/quantidades.
+
 
 ---
 
@@ -351,16 +86,25 @@ Representa a informação através de um número restrito de quantidades/variáv
 Exemplo: &lt;br&gt;
 – Relação entre força, massa e aceleração &lt;br&gt;
 – F = m·a &lt;br&gt;
+ &lt;br&gt;
+  &lt;br&gt;
+– Relação entre velocidade, distância e tempo &lt;br&gt;
+– V = d/t  &lt;br&gt;
 
 ---
 
 ## Modelo Probabilístico
+
 ### Considera dois componentes
+
 #### O componente determinístico  
 #### O componente aleatório  
+
 Exemplo:  
-– O volume de vendas é, em geral, 10 vezes o que se gasta com propaganda...*exatamente???*  
+– O volume de vendas é, em geral, 10 vezes o que se gasta com propaganda...*exatamente?*  
+
 – Y = 10X + Erro  
+
 – O erro aleatório representa a variação nas vendas que não pode ser explicada pela propaganda
 
 ---
@@ -370,24 +114,61 @@ Exemplo:
 
 ### Variável reposta: uma variável numérica (aleatória), cujo comportamento (tendência) deseja-se analisar ou prever
 
-### Variáveis explicativas ou independentes: uma ou mais variáveis numéricas ou categóricas não estocásticas que se supõe sejam relacionadas à variável reposta
+### Variáveis explicativas ou independentes: uma ou mais variáveis numéricas ou categóricas não estocásticas que se supõe sejam relacionadas à variável reposta.
+
+`$$Y_i = \beta_0+\beta_1*X_i+\epsilon$$`
 
 ---
 
+&lt;img src="Index_files/figure-html/unnamed-chunk-2-1.png" width="672" /&gt;
+
+
+---
+
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-3-1.png" width="672" /&gt;
+
+---
+
+# Como ajustar essa reta aos pontos?
+&lt;img src="Index_files/figure-html/unnamed-chunk-4-1.png" width="672" /&gt;
+
+---
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-5-1.png" width="672" /&gt;
+
+---
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-6-1.png" width="672" /&gt;
+
+---
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-7-1.png" width="672" /&gt;
+
+---
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-8-1.png" width="672" /&gt;
+
+---
+
+class: center, middle, inverse
+
+
+# QUAL A MELHOR RETA?
+
+---
+
+# Como podemos ajustar a reta (distância minima ao quadrado)?
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-9-1.png" width="672" /&gt;
+
+---
+
+## Método dos Mínimos Quadrados
 
 ```r
 y&lt;-c(10,12,13,15,16,18,19,20,21,22)  
 x&lt;-c(1,2,3,4,5,6,7,8,9,10)
-plot(x,y,pch = 19, col = 'darkgray', las = 1)
-abline(lm(y~x), lwd = 2)
-```
-
-![](index_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
-
----
-
-
-```r
 mod&lt;-lm(y~x)
 mod
 ```
@@ -404,21 +185,23 @@ mod
 
 ```r
 Yhat &lt;- predict(mod)
-Erro &lt;- c(y - Yhat)
+Erro &lt;- c(y - Yhat) # equivalente a residuals(mod)
 ```
 
 ---
 
-Para esse conjunto de dados, as estimativas do `\(\beta_0\)` e do `\(\beta_1\)` desse modelo linear simples são 9.2666667 e 1.3333333. Logo a equação fica:
+Para esse conjunto de dados, as estimativas do `\(\beta_0\)` e do `\(\beta_1\)` desse modelo linear simples são 9.27 e 1.33. Logo a equação fica:
 
-`\(\hat{Y}\)` = 9.2666667 + 1.3333333*Xi
+`\(\hat{Y}\)` = 9.27 + 1.33*Xi
 
 Por exemplo, para dado valor de X, é possível obter um valor para Y  &lt;br&gt;
-X = 1 -&gt;  `\(\hat{Y}\)` = 9,267+1,333*(1) = 10,6 (como y = 10 o erro é -0,6)  &lt;br&gt;
+X = 1 -&gt;  `\(\hat{Y}\)` = 9,27+1,33*(1) = 10,6 (como y = 10 o erro é -0,6)  &lt;br&gt;
 &lt;br&gt;
-X = 5 -&gt;  `\(\hat{Y}\)` = 9,267+1,333*(5) = 15,932 (como y = 16 o erro é 0,068)  
+X = 5 -&gt;  `\(\hat{Y}\)` = 9,27+1,33*(5) = 15,932 (como y = 16 o erro é 0,068)  
 
 ---
+
+## Tipos de relaciomentos
 
 
 ```r
@@ -444,38 +227,575 @@ abline(lm(y4~x4),col="gray")
 
 ---
 
-![](index_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
-
----
-
-# Na prática vamos ter algo do tipo
-![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+&lt;img src="Index_files/figure-html/unnamed-chunk-12-1.png" width="960" /&gt;
 
 
 ---
 
+## Métodos dos Mínimos Quadrados
+
+
+```r
+anova(mod)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: y
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## x          1 146.667 146.667  676.92 5.113e-09 ***
+## Residuals  8   1.733   0.217                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
+---
+
+## Métodos dos Mínimos Quadrados
+
+
+```r
+summary(mod)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.60000 -0.26667  0.06667  0.31667  0.73333 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  9.26667    0.31798   29.14 2.08e-09 ***
+## x            1.33333    0.05125   26.02 5.11e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4655 on 8 degrees of freedom
+## Multiple R-squared:  0.9883,	Adjusted R-squared:  0.9869 
+## F-statistic: 676.9 on 1 and 8 DF,  p-value: 5.113e-09
+```
+
+---
+
+
+
+```r
+fit &lt;- lm(Kmporlitro ~ HP, data = CARROS)  # Fit the model
+summary(fit)  # Report the results
+```
+
+```
+## 
+## Call:
+## lm(formula = Kmporlitro ~ HP, data = CARROS)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.7121 -2.1122 -0.8854  1.5819  8.2360 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 30.09886    1.63392  18.421  &lt; 2e-16 ***
+## HP          -0.06823    0.01012  -6.742 1.79e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.863 on 30 degrees of freedom
+## Multiple R-squared:  0.6024,	Adjusted R-squared:  0.5892 
+## F-statistic: 45.46 on 1 and 30 DF,  p-value: 1.788e-07
+```
+
+---
+
+
+```r
+CARROS$predicted &lt;- predict(fit)   # Save the predicted values
+CARROS$residuals &lt;- residuals(fit) # Save the residual values
+CARROS %&gt;% select(Kmporlitro, predicted, residuals) %&gt;% head()
+```
+
+```
+##                   Kmporlitro predicted  residuals
+## Mazda RX4               21.0  22.59375 -1.5937500
+## Mazda RX4 Wag           21.0  22.59375 -1.5937500
+## Datsun 710              22.8  23.75363 -0.9536307
+## Hornet 4 Drive          21.4  22.59375 -1.1937500
+## Hornet Sportabout       18.7  18.15891  0.5410881
+## Valiant                 18.1  22.93489 -4.8348913
+```
+
+---
+
+
+```r
+confint(fit, level=0.95) # intervalo de confianca dos parametros do modelo
+```
+
+```
+##                   2.5 %     97.5 %
+## (Intercept) 26.76194879 33.4357723
+## HP          -0.08889465 -0.0475619
+```
+
+```r
+fitted(fit) # valores ajustados
+```
+
+```
+##           Mazda RX4       Mazda RX4 Wag          Datsun 710 
+##           22.593750           22.593750           23.753631 
+##      Hornet 4 Drive   Hornet Sportabout             Valiant 
+##           22.593750           18.158912           22.934891 
+##          Duster 360           Merc 240D            Merc 230 
+##           13.382932           25.868707           23.617174 
+##            Merc 280           Merc 280C          Merc 450SE 
+##           21.706782           21.706782           17.817770 
+##          Merc 450SL         Merc 450SLC  Cadillac Fleetwood 
+##           17.817770           17.817770           16.112064 
+## Lincoln Continental   Chrysler Imperial            Fiat 128 
+##           15.429781           14.406357           25.595794 
+##         Honda Civic      Toyota Corolla       Toyota Corona 
+##           26.550990           25.664022           23.480718 
+##    Dodge Challenger         AMC Javelin          Camaro Z28 
+##           19.864619           19.864619           13.382932 
+##    Pontiac Firebird           Fiat X1-9       Porsche 914-2 
+##           18.158912           25.595794           23.890087 
+##        Lotus Europa      Ford Pantera L        Ferrari Dino 
+##           22.389065           12.086595           18.158912 
+##       Maserati Bora          Volvo 142E 
+##            7.242387           22.661978
+```
+
+---
+class: center, middle
+
+# Visualizando o Modelo
+
+---
+
+
+```r
+ggplot(CARROS, aes(x = HP, y = Kmporlitro)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Plot regression slope
+  theme_bw()  # Add theme for cleaner look
+```
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-18-1.png" width="672" /&gt;
+
+---
+
+
+```r
+ggplot(CARROS, aes(x = HP, y = Kmporlitro)) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Plot regression slope
+  geom_segment(aes(xend = HP, yend = predicted), alpha = .2) +  # alpha to fade lines
+  geom_point() +
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()  # Add theme for cleaner look
+```
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-19-1.png" width="672" /&gt;
+
+---
+
+
+```r
+ggplot(CARROS, aes(x = HP, y = Kmporlitro)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +
+  geom_segment(aes(xend = HP, yend = predicted), alpha = .2) +
+  geom_point(aes(color = abs(residuals), size = abs(residuals))) + # size also mapped
+  scale_color_continuous(low = "black", high = "red") +
+  guides(color = FALSE, size = FALSE) +  # Size legend also removed
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+&lt;img src="Index_files/figure-html/unnamed-chunk-20-1.png" width="672" /&gt;
+
+---
+class: inverse, center, middle
+
+# Regressão Múltipla
+
+---
+
+# Regressão Múltipla
+
+Queremos ajustar o modelo de minimos quadrados (MQO) com mais de uma variável explicativa. 
+
+Por exemplo:
+
+`$$KmporLitro = \beta_0+\beta_1*HP+\beta_2*Peso+\epsilon$$`
+
+`$$KmporLitro = \beta_0+\beta_1*HP+\beta_2*Peso+\beta_3*TipodeMarcha +\beta_4 Tipodecombustivel+\epsilon$$`
+ 
+O modelo 1 tem duas variáveis explicativas.  
+O modelo 2 tem quatro variáveis explicativas.
+
+Três perguntas:   
+1) como fazer esses modelos?  
+2) qual deles tem o melhor ajuste?    
+3) como interpretar o coeficiente beta?  
+
+---
+
+
+```r
+### Regressao linear Multipla
+modelo1 = lm(Kmporlitro ~ HP + Peso , data=CARROS)
+modelo2 = lm(Kmporlitro ~ HP + Peso + TipodeMarcha, data=CARROS)
+modelo_geral = lm(Kmporlitro ~ HP + Peso + TipodeMarcha + Tipodecombustivel, data=CARROS)
+
+summary(modelo1)
+summary(modelo2)
+summary(modelo_geral)
+```
+
+---
+
+
+```r
+### Regressao linear Multipla
+modelo1 = lm(Kmporlitro ~ HP + Peso , data=CARROS)
+modelo2 = lm(Kmporlitro ~ HP + Peso + TipodeMarcha + Tipodecombustivel, data=CARROS)
+modelo_geral = lm(Kmporlitro ~ HP + Peso + TipodeMarcha + Tipodecombustivel + NumdeValvulas + NumdeMarchas + RPM + Cilindros, data=CARROS)
+
+summary(modelo1)
+```
+
+```
+## 
+## Call:
+## lm(formula = Kmporlitro ~ HP + Peso, data = CARROS)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.941 -1.600 -0.182  1.050  5.854 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
+## HP          -0.03177    0.00903  -3.519  0.00145 ** 
+## Peso        -3.87783    0.63273  -6.129 1.12e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.593 on 29 degrees of freedom
+## Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
+## F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
+```
+
+```r
+#summary(modelo2)
+#summary(modelo_geral)
+```
+
+---
+
+# R2 e R2 ajustado
+
+
+```r
+summary(modelo1)$r.squared 
+```
+
+```
+## [1] 0.8267855
+```
+
+```r
+summary(modelo2)$r.squared 
+```
+
+```
+## [1] 0.8499499
+```
+
+```r
+summary(modelo_geral)$r.squared 
+```
+
+```
+## [1] 0.8634989
+```
+
+```r
+summary(modelo1)$adj.r.squared 
+```
+
+```
+## [1] 0.8148396
+```
+
+```r
+summary(modelo2)$adj.r.squared 
+```
+
+```
+## [1] 0.8277202
+```
+
+```r
+summary(modelo_geral)$adj.r.squared 
+```
+
+```
+## [1] 0.8160203
+```
+
+---
+
+# R2 e Akaike information criterion (AIC)
+
+```r
+summary(modelo1)$adj.r.squared 
+```
+
+```
+## [1] 0.8148396
+```
+
+```r
+summary(modelo2)$adj.r.squared 
+```
+
+```
+## [1] 0.8277202
+```
+
+```r
+summary(modelo_geral)$adj.r.squared 
+```
+
+```
+## [1] 0.8160203
+```
+
+```r
+AIC(modelo1)
+```
+
+```
+## [1] 156.6523
+```
+
+```r
+AIC(modelo2)
+```
+
+```
+## [1] 156.0584
+```
+
+```r
+AIC(modelo_geral)
+```
+
+```
+## [1] 161.03
+```
+
+---
+
+### Seleção de modelo (variáveis) via STEPWISE
+
+```r
+library(MASS)
+step &lt;- stepAIC(modelo_geral, direction="both") # quanto menor o AIC mais parcimonioso o modelo
+```
+
+```
+## Start:  AIC=68.22
+## Kmporlitro ~ HP + Peso + TipodeMarcha + Tipodecombustivel + NumdeValvulas + 
+##     NumdeMarchas + RPM + Cilindros
+## 
+##                     Df Sum of Sq    RSS    AIC
+## - Cilindros          1     0.019 153.73 66.222
+## - Tipodecombustivel  1     0.053 153.76 66.229
+## - NumdeMarchas       1     2.122 155.83 66.657
+## - HP                 1     3.610 157.32 66.961
+## - RPM                1     5.822 159.53 67.408
+## - NumdeValvulas      1     5.976 159.68 67.439
+## &lt;none&gt;                           153.71 68.218
+## - TipodeMarcha       1    12.047 165.75 68.633
+## - Peso               1    35.865 189.57 72.929
+## 
+## Step:  AIC=66.22
+## Kmporlitro ~ HP + Peso + TipodeMarcha + Tipodecombustivel + NumdeValvulas + 
+##     NumdeMarchas + RPM
+## 
+##                     Df Sum of Sq    RSS    AIC
+## - Tipodecombustivel  1     0.094 153.82 64.241
+## - NumdeMarchas       1     2.665 156.39 64.772
+## - HP                 1     4.636 158.36 65.173
+## - NumdeValvulas      1     5.997 159.72 65.447
+## - RPM                1     7.065 160.79 65.660
+## &lt;none&gt;                           153.73 66.222
+## - TipodeMarcha       1    13.907 167.63 66.993
+## + Cilindros          1     0.019 153.71 68.218
+## - Peso               1    37.519 191.25 71.210
+## 
+## Step:  AIC=64.24
+## Kmporlitro ~ HP + Peso + TipodeMarcha + NumdeValvulas + NumdeMarchas + 
+##     RPM
+## 
+##                     Df Sum of Sq    RSS    AIC
+## - NumdeMarchas       1     3.019 156.84 62.864
+## - HP                 1     4.544 158.36 63.173
+## - NumdeValvulas      1     6.075 159.90 63.481
+## &lt;none&gt;                           153.82 64.241
+## - TipodeMarcha       1    13.815 167.63 64.994
+## - RPM                1    14.025 167.84 65.034
+## + Tipodecombustivel  1     0.094 153.73 66.222
+## + Cilindros          1     0.060 153.76 66.229
+## - Peso               1    44.840 198.66 70.428
+## 
+## Step:  AIC=62.86
+## Kmporlitro ~ HP + Peso + TipodeMarcha + NumdeValvulas + RPM
+## 
+##                     Df Sum of Sq    RSS    AIC
+## - NumdeValvulas      1     3.227 160.07 61.515
+## - HP                 1     4.411 161.25 61.751
+## &lt;none&gt;                           156.84 62.864
+## + NumdeMarchas       1     3.019 153.82 64.241
+## - RPM                1    18.086 174.93 64.356
+## + Cilindros          1     0.929 155.91 64.673
+## + Tipodecombustivel  1     0.448 156.39 64.772
+## - TipodeMarcha       1    29.194 186.03 66.326
+## - Peso               1    66.734 223.57 72.208
+## 
+## Step:  AIC=61.52
+## Kmporlitro ~ HP + Peso + TipodeMarcha + RPM
+## 
+##                     Df Sum of Sq    RSS    AIC
+## - HP                 1     9.219 169.29 61.307
+## &lt;none&gt;                           160.07 61.515
+## + NumdeValvulas      1     3.227 156.84 62.864
+## - RPM                1    20.225 180.29 63.323
+## + Cilindros          1     0.249 159.82 63.465
+## + Tipodecombustivel  1     0.249 159.82 63.466
+## + NumdeMarchas       1     0.171 159.90 63.481
+## - TipodeMarcha       1    25.993 186.06 64.331
+## - Peso               1    78.494 238.56 72.284
+## 
+## Step:  AIC=61.31
+## Kmporlitro ~ Peso + TipodeMarcha + RPM
+## 
+##                     Df Sum of Sq    RSS    AIC
+## &lt;none&gt;                           169.29 61.307
+## + HP                 1     9.219 160.07 61.515
+## + NumdeValvulas      1     8.036 161.25 61.751
+## + Cilindros          1     1.501 167.78 63.022
+## + NumdeMarchas       1     0.123 169.16 63.284
+## + Tipodecombustivel  1     0.000 169.29 63.307
+## - TipodeMarcha       1    26.178 195.46 63.908
+## - RPM                1   109.034 278.32 75.217
+## - Peso               1   183.347 352.63 82.790
+```
+
+```r
+step$anova # display results 
+```
+
+```
+## Stepwise Model Path 
+## Analysis of Deviance Table
+## 
+## Initial Model:
+## Kmporlitro ~ HP + Peso + TipodeMarcha + Tipodecombustivel + NumdeValvulas + 
+##     NumdeMarchas + RPM + Cilindros
+## 
+## Final Model:
+## Kmporlitro ~ Peso + TipodeMarcha + RPM
+## 
+## 
+##                  Step Df   Deviance Resid. Df Resid. Dev      AIC
+## 1                                          23   153.7067 68.21792
+## 2         - Cilindros  1 0.01928577        24   153.7259 66.22194
+## 3 - Tipodecombustivel  1 0.09391889        25   153.8199 64.24148
+## 4      - NumdeMarchas  1 3.01940929        26   156.8393 62.86354
+## 5     - NumdeValvulas  1 3.22719028        27   160.0665 61.51530
+## 6                - HP  1 9.21946935        28   169.2859 61.30730
+```
+
+---
+
+# ANOVA
+
+```r
+m1 &lt;- aov(CARROS$Kmporlitro ~ as.factor(CARROS$NumdeValvulas))
+summary(m1)
+layout(matrix(c(1,2,3,4),2,2)) # optional layout
+plot(m1) # diagnostic plots
+TukeyHSD(m1)
+plot(TukeyHSD(m1)) # where fit comes from aov() 
+```
+
+
+---
+
+# ANOVA
+
+```r
+m1 &lt;- aov(CARROS$Kmporlitro ~ as.factor(CARROS$Cilindros) + CARROS$TipodeMarcha)
+summary(m1)
+layout(matrix(c(1,2,3,4),2,2)) # optional layout
+plot(m1) # diagnostic plots
+TukeyHSD(m1)
+plot(TukeyHSD(m1)) # where fit comes from aov() 
+```
+
+
+---
+
+
+&lt;!--
 background-image: url(http://www.fondazioneluigieinaudi.it/wp-content/uploads/2018/01/pol.jpg)
 background-position: 50% 50%
 class: center, top, inverse
-# Use R!
-
+   # Use R!
 ---
 class: center, middle, inverse
 class: center, bottom, inverse
-    </textarea>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create({
-"highlightLines": true
-});
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
-(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-  }
+--&gt;
+    </textarea>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
 });
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
