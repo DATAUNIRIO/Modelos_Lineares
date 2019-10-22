@@ -1,0 +1,66 @@
+---
+title: "SANDUICHE: Como mudar erros padrão normais para robustos em um modelo linear?"
+author: "Steven Dutt Ross"
+date: "22/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# http://www.joseincio.com/post/como-cambiar-errores-estandards-normales-a-robustos-en-un-modelo/
+```
+
+Vamos usar os dados do gapminder:
+
+```{r}
+library(rio)
+data<-import("https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv")
+```
+
+
+Vamos fazer uma regressão simples com a expectativa de vida como dependente e o gdpPercap e a população (no logaritmo) como independentes
+
+```{r}
+m1 = lm (lifeExp ~ gdpPercap + log (pop), data = data)
+```
+
+
+Agora pedimos os resultados com resumo
+```{r}
+summary(m1)
+```
+
+O resumo mostra erros normais. Para estimar erros robustos (erros padrão robustos), podemos usar os pacotes sandwich e lmtest
+
+Com a função vcovHC, podemos obter a matriz de variações e covariâncias.
+
+```{r}
+library(sandwich)
+vcovHC(m1, type = "HC0") 
+```
+
+
+E se complementamos isso com coeftest, podemos testar se os coeficientes são significativos usando erros padrão robustos.
+
+```{r}
+library(lmtest)
+coef2<-coeftest(m1, vcov = vcovHC(m1, "HC0")) 
+
+```
+
+Vamos substituir o resumo do modelo usando esses erros padrão.
+
+```{r}
+sum1<-summary(m1)
+sum1$coefficients[,2]<-coef2[,2]
+```
+Vamo comparar
+```{r}
+summary(m1)
+```
+
+```{r}
+sum1
+```
+
+
