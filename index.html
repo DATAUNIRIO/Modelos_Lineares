@@ -1,35 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="" xml:lang="">
   <head>
-    <title>Introdução aos Modelos Lineares</title>
-    <meta charset="utf-8">
+    <title>👨‍🏫 Introdução aos Modelos Lineares</title>
+    <meta charset="utf-8" />
     <meta name="author" content="Steven Dutt Ross" />
-    <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="index_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Introdução aos Modelos Lineares
+# 👨‍🏫 Introdução aos Modelos Lineares
+## <br> 🔗 <a href="https://ap.metodosquantitativos.com/">Aula Modelos</a>
 ### Steven Dutt Ross
+### UNIRIO
 
 ---
+
+
+&lt;style type="text/css"&gt;
+body {
+    background-color: #f7f68f;
+    color: #1a5b78;
+}
+
+.huge-text {
+ font-family: 'Montserrat', sans-serif;
+ font-size: 600%;
+ font-weight: bold;
+ color: var(--monument);
+}
+.larger { font-size: 400% }
+.pull-left {
+  float: left;
+  width: 47%;
+}
+.pull-right {
+  float: right;
+  width: 47%;
+}
+.pull-right ~ * {
+  clear: both;
+}
+
+&lt;/style&gt;
+
+
 
   
 
 
 
-## Como ajustar uma reta que a esses dados?
-&lt;img src="Index_files/figure-html/unnamed-chunk-1-1.png" width="672" /&gt;
+### Como ajustar uma reta que a esses dados?
+![](index_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 
 ---
 
-class: inverse, center, middle
-
-# Introdução aos Modelos de Regressão
-
+### Como ajustar uma reta que a esses dados?
+![](index_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -40,12 +70,7 @@ class: inverse, center, middle
 ### É utilizado para descrever relações entre variáveis  
 &lt;br&gt;
 ### Modelos Determinísticos  
-### Modelos Probabilísticos  
-
-
-.footnote[
-[1] Fonte deste segmento: [© 2013 Denise Britz do Nascimento Silva](http://www.ence.ibge.gov.br/index.php/portal-graduacao/portal-graduacao-corpo-docente)
-]
+### Modelos Probabilísticos (Estatísticos)  
 
 ---
 
@@ -77,7 +102,6 @@ Representa a informação através de um número restrito de quantidades/variáv
 
 ### Busca-se evidenciar suas principais características, utilizando um número restrito de variáveis/quantidades.
 
-
 ---
 
 ## Modelo Determinístico
@@ -93,7 +117,7 @@ Exemplo: &lt;br&gt;
 
 ---
 
-## Modelo Probabilístico
+## Modelo Estatístico
 
 ### Considera dois componentes
 
@@ -109,45 +133,74 @@ Exemplo:
 
 ---
 
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](index_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+---
+
+# Modelos de Regressão
+### Qual é a relação entre as diferentes variáveis?  
+O Km/l como uma função do HP.
+
+`$$Km/l_i = f(HP_i)+\epsilon$$`
+
+Em uma relação linear, temos:
+
+`$$Km/l_i = \beta_0+\beta_1*Km/l_i+\epsilon$$`
+
+
+---
 # Modelos de Regressão
 ### Qual é a relação entre as diferentes variáveis?  
 
 ### Variável reposta: uma variável numérica (aleatória), cujo comportamento (tendência) deseja-se analisar ou prever
 
-### Variáveis explicativas ou independentes: uma ou mais variáveis numéricas ou categóricas não estocásticas que se supõe sejam relacionadas à variável reposta.
+### Variáveis explicativas ou independentes: uma ou mais variáveis numéricas ou categóricas não estocásticas que se supõe sejam relacionadas à variável resposta.
 
 `$$Y_i = \beta_0+\beta_1*X_i+\epsilon$$`
+---
+
+##  Regressão linear: objetivos
+* Predizer observações futuras
+* Avaliar o efeito as relações da variável independente (x) sobre uma variável dependente (y)
+* Descrever a estrutura dos dados
 
 ---
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-2-1.png" width="672" /&gt;
+## Modelo de Regressão Linear
+`\(Y = \beta_0 + \beta_1 x + \epsilon\)`   
 
-
----
-
-
-&lt;img src="Index_files/figure-html/unnamed-chunk-3-1.png" width="672" /&gt;
-
----
-
-# Como ajustar essa reta aos pontos?
-&lt;img src="Index_files/figure-html/unnamed-chunk-4-1.png" width="672" /&gt;
+Onde:  
+Y = é o valor a ser predito  
+`\(\beta_0\)` = é o intercepto (valor quando x = 0)  
+`\(\beta_1\)` = é a inclinação da reta de regressão  
+x = é o valor da variável preditora (preditor linear)   
+`\(\epsilon\)` é o erro
 
 ---
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-5-1.png" width="672" /&gt;
+## Como ajustar essa reta aos pontos?
+![](index_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 
 ---
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-6-1.png" width="672" /&gt;
+![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 
 ---
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-7-1.png" width="672" /&gt;
+![](index_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
 
 ---
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-8-1.png" width="672" /&gt;
+![](index_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+---
+
+![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -158,9 +211,9 @@ class: center, middle, inverse
 
 ---
 
-# Como podemos ajustar a reta (distância minima ao quadrado)?
+## Como podemos ajustar a reta (distância mínima ao quadrado)?
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-9-1.png" width="672" /&gt;
+![](index_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -201,6 +254,12 @@ X = 5 -&gt;  `\(\hat{Y}\)` = 9,27+1,33*(5) = 15,932 (como y = 16 o erro é 0,068
 
 ---
 
+![](index_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+
+---
+
+
 ## Tipos de relaciomentos
 
 
@@ -227,7 +286,7 @@ abline(lm(y4~x4),col="gray")
 
 ---
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-12-1.png" width="960" /&gt;
+![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -348,34 +407,179 @@ fitted(fit) # valores ajustados
 ```
 
 ```
-##           Mazda RX4       Mazda RX4 Wag          Datsun 710 
-##           22.593750           22.593750           23.753631 
-##      Hornet 4 Drive   Hornet Sportabout             Valiant 
-##           22.593750           18.158912           22.934891 
-##          Duster 360           Merc 240D            Merc 230 
-##           13.382932           25.868707           23.617174 
-##            Merc 280           Merc 280C          Merc 450SE 
-##           21.706782           21.706782           17.817770 
-##          Merc 450SL         Merc 450SLC  Cadillac Fleetwood 
-##           17.817770           17.817770           16.112064 
-## Lincoln Continental   Chrysler Imperial            Fiat 128 
-##           15.429781           14.406357           25.595794 
-##         Honda Civic      Toyota Corolla       Toyota Corona 
-##           26.550990           25.664022           23.480718 
-##    Dodge Challenger         AMC Javelin          Camaro Z28 
-##           19.864619           19.864619           13.382932 
-##    Pontiac Firebird           Fiat X1-9       Porsche 914-2 
-##           18.158912           25.595794           23.890087 
-##        Lotus Europa      Ford Pantera L        Ferrari Dino 
-##           22.389065           12.086595           18.158912 
-##       Maserati Bora          Volvo 142E 
-##            7.242387           22.661978
+##           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+##           22.593750           22.593750           23.753631           22.593750 
+##   Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+##           18.158912           22.934891           13.382932           25.868707 
+##            Merc 230            Merc 280           Merc 280C          Merc 450SE 
+##           23.617174           21.706782           21.706782           17.817770 
+##          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+##           17.817770           17.817770           16.112064           15.429781 
+##   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+##           14.406357           25.595794           26.550990           25.664022 
+##       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+##           23.480718           19.864619           19.864619           13.382932 
+##    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+##           18.158912           25.595794           23.890087           22.389065 
+##      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+##           12.086595           18.158912            7.242387           22.661978
 ```
 
 ---
-class: center, middle
 
-# Visualizando o Modelo
+## Modelo de regressão: exemplo 1
+
+```r
+y = c(110, 120, 90, 70, 50, 80, 40, 40, 50, 30)
+xx = 1:10
+modelo = lm(y ~ xx)
+modelo
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ xx)
+## 
+## Coefficients:
+## (Intercept)           xx  
+##     118.667       -9.212
+```
+
+---
+
+## Modelo de regressão: exemplo 1
+
+```r
+plot(y ~ xx)
+abline(modelo, col=2, lty=2, lwd=2)
+legend("top", legend=c("valores observados", "valores ajustados"), lty=c(NA,2), col=c(1,2), lwd=1:2, bty="n", pch=c(1,NA))
+```
+
+![](index_files/figure-html/Reg0-1.png)&lt;!-- --&gt;
+
+---
+
+## Modelo de regressão: exemplo 2
+
+```r
+renda = c(1750, 1680, 1700, 1710, 1690, 1650, 1650, 1600, 1800, 1860)
+anosdeestudo = c(8, 7, 6, 6, 6, 5, 5, 5, 8, 9)
+modelo2 = lm(renda ~ anosdeestudo)
+```
+
+---
+
+
+```r
+plot(renda ~ anosdeestudo)
+abline(modelo2, col=2, lty=2, lwd=2)
+legend("topleft", legend=c("valores observados", "valores ajustados"), lty=c(NA,2), col=c(1,2), lwd=1:2, bty="n", pch=c(1,NA))
+```
+
+![](index_files/figure-html/Reg21-1.png)&lt;!-- --&gt;
+
+```r
+modelo2
+```
+
+```
+## 
+## Call:
+## lm(formula = renda ~ anosdeestudo)
+## 
+## Coefficients:
+##  (Intercept)  anosdeestudo  
+##      1387.51         49.46
+```
+
+---
+
+## Modelo de regressão: exemplo 3
+
+```r
+data("mtcars")
+modelo3 = lm(mpg ~ wt, data=mtcars)
+modelo3
+```
+
+```
+## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt  
+##      37.285       -5.344
+```
+
+---
+
+
+```r
+plot(mtcars$mpg ~ mtcars$wt)
+abline(modelo3, col=2, lty=2, lwd=2)
+legend("topright", legend=c("valores observados", "valores ajustados"), lty=c(NA,2), col=c(1,2), lwd=1:2, bty="n", pch=c(1,NA))
+```
+
+![](index_files/figure-html/Reg31-1.png)&lt;!-- --&gt;
+
+---
+
+## Modelo de regressão: exemplo 4
+
+```r
+modelo4 = lm(mpg ~ wt+cyl+disp+hp, data=mtcars)
+modelo4
+```
+
+```
+## 
+## Call:
+## lm(formula = mpg ~ wt + cyl + disp + hp, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl         disp           hp  
+##    40.82854     -3.85390     -1.29332      0.01160     -0.02054
+```
+
+---
+
+
+```r
+par(mfrow = c(2, 2))
+plot(mtcars$mpg ~ mtcars$wt)
+plot(mtcars$mpg ~ mtcars$cyl)
+plot(mtcars$mpg ~ mtcars$disp)
+plot(mtcars$mpg ~ mtcars$hp)
+```
+
+![](index_files/figure-html/Reg5-1.png)&lt;!-- --&gt;
+
+
+---
+
+class: middle
+
+.pull-left[
+  .huge-text[check point]
+]
+.pull-right[  
+  .larger[  
+
+até aqui, tudo ok?
+
+
+
+  ]
+]
+
+
+---
+class: inverse, center, middle
+
+
+#Visualizando o Modelo
 
 ---
 
@@ -387,7 +591,11 @@ ggplot(CARROS, aes(x = HP, y = Kmporlitro)) +
   theme_bw()  # Add theme for cleaner look
 ```
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-18-1.png" width="672" /&gt;
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -401,7 +609,11 @@ ggplot(CARROS, aes(x = HP, y = Kmporlitro)) +
   theme_bw()  # Add theme for cleaner look
 ```
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-19-1.png" width="672" /&gt;
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -417,7 +629,11 @@ ggplot(CARROS, aes(x = HP, y = Kmporlitro)) +
   theme_bw()
 ```
 
-&lt;img src="Index_files/figure-html/unnamed-chunk-20-1.png" width="672" /&gt;
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 
 ---
 class: inverse, center, middle
@@ -754,34 +970,112 @@ plot(TukeyHSD(m1)) # where fit comes from aov()
 
 
 ---
+class: center, middle
 
 
+[Continuação](https://dataunirio.github.io/Regressao_Diagnostico/#1)
 &lt;!--
-background-image: url(http://www.fondazioneluigieinaudi.it/wp-content/uploads/2018/01/pol.jpg)
 background-position: 50% 50%
 class: center, top, inverse
-   # Use R!
----
 class: center, middle, inverse
 class: center, bottom, inverse
-
 --&gt;
     </textarea>
-<script src="libs/remark-latest.min.js"></script>
-<script>var slideshow = remark.create();
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>"
+});
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
-})();</script>
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
-(function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -795,14 +1089,15 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

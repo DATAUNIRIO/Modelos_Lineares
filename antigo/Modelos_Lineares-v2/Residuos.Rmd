@@ -1,0 +1,385 @@
+---
+title: "Visualizaçãos dos Resíduos de um Modelo de Regressão"
+author: "Steven Dutt Ross"
+categories: ["R"]
+tags: ["R Markdown", "Residuos", "R","Regressão","Modelos Lineares"]
+output: 
+   html_document:
+     theme: journal
+     smart: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyr)
+library(dplyr)
+```
+
+
+# A importancia dos Resíduos 
+
+OK, talvez os resíduos não sejam o tópico mais sexy do mundo. Ainda assim, eles são elementos essenciais no procedimento estatístico. São um meio para identificar possíveis problemas de qualquer modelo estatístico. Por exemplo, os resíduos de um modelo de regressão linear devem ser [homocedásticos](https://www.dicio.com.br/homocedastico/), com distribuição normal e independentes. Além disso, elese podem indicar um problema com o modelo, como a não linearidade.
+
+Este texto abordará vários métodos para visualizar resíduos de modelos baseados em regressão. Veja alguns exemplos das visualizações que vamos criar:
+  
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
+
+
+### O que você precisa saber
+
+Para tirar o máximo proveito deste texto, há algumas coisas que você deve estar ciente. Em primeiro lugar, se você não estiver familiarizado com o significado dos resíduos, ou o que parece estar acontecendo aqui, recomendo que você faça primeiro algumas leituras introdutórias sobre o tópico. 
+
+Você também precisa estar familiarizado com a execução de regressão linear em R e usando os seguintes pacotes: ggplot2 (para produzir os gráficos) e dplyr e tidyr (para fazer manipulação de dados). Na maioria dos casos, você deve acompanhar cada etapa, mas ajudará se você já estiver familiarizado com elas.
+
+### O que nós já temos
+
+Antes de mergulhar, é bom lembrar das opções padrão que R tem para visualizar resíduos. Mais notavelmente, podemos construir um modelo de regressão ajustado. Por exemplo, usando a base de dados *mtcars*, vamos regredir o número de milhas por galão para cada carro (mpg) em sua potência (hp) e visualizar informações sobre o modelo e os resíduos:
+  
+```{r}
+fit <- lm(mpg ~ hp, data = mtcars)  # Fit the model
+summary(fit)  # Report the results
+```
+  
+```{r}
+par(mfrow = c(2, 2))  # Split the plotting panel into a 2 x 2 grid
+plot(fit)  # Plot the model information
+par(mfrow = c(1, 1)) 
+```
+
+
+Esses gráficos fornecem um método tradicional para interpretar os resíduos e determinar se pode haver problemas com nosso modelo. Agora vamos pensar em como complementá-los com alguns gráficos alternativos (e visualmente mais atraentes).
+ 
+### Abordagem geral
+
+A abordagem geral por trás de cada um dos modelos de regressão será:
+
+1. Ajuste um modelo de regressão para prever a variável resposta (Y).
+2. Obtenha os valores previstos e residuais associados a cada observação em (Y).
+3. Plote os valores reais e previstos de (Y) para que eles sejam distinguíveis, mas conectados.
+4. Use os residuais para fazer um ajuste estético (por exemplo, cor vermelha quando residual em muito alta) para destacar pontos que são mal previstos pelo modelo.
+
+ 
+### Regressão Linear Simples
+
+Começaremos com uma regressão linear simples, que é quando regredimos uma variável em apenas uma outra. Podemos dar o exemplo anterior, onde nós regredimos milhas por galão (mpg) em cavalos de potência (HP).
+ 
+#### Etapa 1: ajuste o modelo
+
+Primeiro, vamos nos adequar ao nosso modelo. Nesse caso, vamos copiar o conjunto de dados mtcars para um novo objeto d, para que possamos manipulá-lo mais tarde:
+
+```{r}
+d <- mtcars
+fit <- lm(mpg ~ hp, data = d)
+```
+  
+#### Etapa 2: obter valores previstos e residuais
+
+Em seguida, queremos obter valores preditos e residuais para adicionar informações suplementares a este gráfico. Nós podemos fazer isso da seguinte maneira:
+
+```{r}
+d$predicted <- predict(fit)   # Save the predicted values
+d$residuals <- residuals(fit) # Save the residual values
+
+# Quick look at the actual, predicted, and residual values
+d %>% select(mpg, predicted, residuals) %>% head()
+```
+
+Parecendo bem até agora.
+ 
+#### Etapa 3: plotar os valores reais e previstos
+
+Plotar esses valores leva alguns passos intermediários. Primeiro, plotamos nossos dados reais da seguinte forma:
+
+```{r}
+library(ggplot2)
+ggplot(d, aes(x = hp, y = mpg)) +  # Set up canvas with outcome variable on y-axis
+  geom_point()  # Plot the actual points
+```
+
+Em seguida, plotamos os valores previstos de forma que eles se distingam dos valores reais. Por exemplo, vamos mudar sua forma:
+
+```{r}
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_point() +
+  geom_point(aes(y = predicted), shape = 1)  # Add the predicted values
+```
+
+Isso está no caminho certo, mas é difícil ver como nossos valores reais e previstos estão relacionados. Vamos conectar os pontos de dados reais com o valor previsto correspondente usando geom_segment():
+
+```{r}
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_segment(aes(xend = hp, yend = predicted)) +
+  geom_point() +
+  geom_point(aes(y = predicted), shape = 1)
+```
+
+Faremos alguns ajustes finais:
+
+1. Limpar a aparência geral com theme_bw().
+2. Suavisar (Fade out) as linhas de conexão, ajustando seu alfa.
+3. Adicionar a inclinação da regressão com geom_smooth():
+    
+```{r}
+library(ggplot2)
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +  # Plot regression slope
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +  # alpha to fade lines
+  geom_point() +
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()  # Add theme for cleaner look
+
+```
+
+
+#### Etapa 4: Uso dos resíduos para ajustar
+
+Finalmente, queremos fazer um ajuste para destacar o tamanho do componente residual. Existem MUITAS opções. Para facilitar as comparações, vou fazer ajustes nos valores reais, mas você pode facilmente aplicar essas ou outras alterações aos valores previstos. Aqui estão alguns exemplos baseados no *script* anterior:
+
+###### ALPHA
+
+```{r}
+# ALPHA
+# Changing alpha of actual values based on absolute value of residuals
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+
+  # > Alpha adjustments made here...
+  geom_point(aes(alpha = abs(residuals))) +  # Alpha mapped to abs(residuals)
+  guides(alpha = FALSE) +  # Alpha legend removed
+  # <
+
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+###### COR
+
+```{r}
+# COLOR
+# High residuals (in abolsute terms) made more red on actual values.
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+
+  # > Color adjustments made here...
+  geom_point(aes(color = abs(residuals))) + # Color mapped to abs(residuals)
+  scale_color_continuous(low = "black", high = "red") +  # Colors to use here
+  guides(color = FALSE) +  # Color legend removed
+  # <
+
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+###### TAMANHO E COR
+
+```{r}
+# SIZE AND COLOR
+# Same coloring as above, size corresponding as well
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+
+  # > Color AND size adjustments made here...
+  geom_point(aes(color = abs(residuals), size = abs(residuals))) + # size also mapped
+  scale_color_continuous(low = "black", high = "red") +
+  guides(color = FALSE, size = FALSE) +  # Size legend also removed
+  # <
+
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+###### COR ACIMA/ABAIXO
+
+```{r}
+# COLOR UNDER/OVER
+# Color mapped to residual with sign taken into account.
+# i.e., whether actual value is greater or less than predicted
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+
+  # > Color adjustments made here...
+  geom_point(aes(color = residuals)) +  # Color mapped here
+  scale_color_gradient2(low = "blue", mid = "white", high = "red") +  # Colors to use here
+  guides(color = FALSE) +
+  # <
+
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+
+Eu particularmente gosto deste último exemplo, porque as cores ajudam muito a identificar a não linearidade nos dados. Por exemplo, podemos ver que há mais vermelho para valores extremos de hp, onde os valores reais são maiores do que o que está sendo previsto. Há mais azul no centro, no entanto, indicando que os valores reais são menores do que o que está sendo previsto. Juntos, isso sugere que a relação entre as variáveis é não-linear e pode ser melhor modelada pela inclusão de um termo quadrático na equação de regressão.
+ 
+### Regressão múltipla
+
+Vamos aumentar a complexidade e entrar em regressão múltipla, onde regredimos uma variável em duas ou mais outras. Para este exemplo, vamos regredir Milhas por galão (mpg) em cavalos de potência (hp), peso (wt) e deslocamento (disp).
+
+
+```{r}
+# Select out data of interest:
+d <- mtcars %>% select(mpg, hp, wt, disp)
+
+# Fit the model
+fit <- lm(mpg ~ hp + wt+ disp, data = d)
+
+# Obtain predicted and residual values
+d$predicted <- predict(fit)
+d$residuals <- residuals(fit)
+
+head(d)
+```
+
+
+Vamos criar um gráfico relevante usando um dos nossos preditores, cavalos de potência (hp). Novamente, começaremos plotando os valores reais e previstos. Nesse caso, a plotagem da inclinação de regressão é um pouco mais complicada, então vamos excluí-la para ficarmos em foco.
+
+```{r}
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +  # Lines to connect points
+  geom_point() +  # Points of actual values
+  geom_point(aes(y = predicted), shape = 1) +  # Points of predicted values
+  theme_bw()
+```
+
+Mais uma vez, podemos fazer todos os tipos de ajustes usando os valores residuais. Vamos aplicar as mesmas alterações do último gráfico acima - com azul ou vermelho para valores reais maiores ou menores do que os valores previstos:
+
+```{r}
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+  geom_point(aes(color = residuals)) +
+  scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+  guides(color = FALSE) +
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+Até agora, não há nada de novo em nosso código. Tudo isso mudou porque os valores previstos não se alinham perfeitamente, porque agora estamos fazendo várias regressões.
+ 
+### Plotar múltiplos preditores de uma só vez
+
+Plotar uma variável independente é bom, mas o objetivo da regressão múltipla é investigar múltiplas variáveis!
+
+Para visualizar isso, usaremos um dos meus truques favoritos: usando o pacote tidyr para coletar (gather) nossas colunas variáveis independentes e, em seguida, usar facet() em nosso ggplot para dividi-las em painéis separados.
+
+Vamos recriar o último gráfico de exemplo, mas separadamente para cada uma das nossas variáveis de previsão.
+
+```{r}
+d %>% 
+  gather(key = "iv", value = "x", -mpg, -predicted, -residuals) %>%  # Get data into shape
+  ggplot(aes(x = x, y = mpg)) +  # Note use of `x` here and next line
+  geom_segment(aes(xend = x, yend = predicted), alpha = .2) +
+  geom_point(aes(color = residuals)) +
+  scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+  guides(color = FALSE) +
+  geom_point(aes(y = predicted), shape = 1) +
+  facet_grid(~ iv, scales = "free_x") +  # Split panels here by `iv`
+  theme_bw()
+```
+
+### Resíduos no Banco de dados iris
+
+```{r}
+d <- iris %>% select(-Species)
+
+# Fit the model
+fit <- lm(Sepal.Width ~ ., data = iris)
+
+# Obtain predicted and residual values
+d$predicted <- predict(fit)
+d$residuals <- residuals(fit)
+
+# Create plot
+d %>% 
+  gather(key = "iv", value = "x", -Sepal.Width, -predicted, -residuals) %>%
+  ggplot(aes(x = x, y = Sepal.Width)) +
+  geom_segment(aes(xend = x, yend = predicted), alpha = .2) +
+  geom_point(aes(color = residuals)) +
+  scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+  guides(color = FALSE) +
+  geom_point(aes(y = predicted), shape = 1) +
+  facet_grid(~ iv, scales = "free_x") +
+  theme_bw()
+```
+
+Para fazer essa plotagem, após a regressão, a única alteração no código anterior era alterar mpg para Sepal.Width em dois lugares: as linhas gather() e ggplot().
+
+Agora podemos ver como os valores reais e previstos se comparam em nossas variáveis preditoras. Caso você tenha esquecido, os pontos coloridos são os dados reais e os círculos brancos são os valores previstos. Com isso em mente, podemos ver, como esperado, que há menos variabilidade nos valores previstos do que os valores reais.
+
+### Regressão Logística
+
+Para encerrar este post, vamos estender nossa abordagem à regressão logística. Isso exigirá o mesmo fluxo de trabalho básico, mas precisaremos extrair valores preditos e residuais para as respostas. Veja um exemplo de previsão de V/S (vs), que assume dois valores 0 ou 1, com hp:
+
+
+```{r}
+# Step 1: Fit the data
+d <- mtcars
+fit <- glm(vs ~ hp, family = binomial(), data = d)
+
+# Step 2: Obtain predicted and residuals
+d$predicted <- predict(fit, type="response")
+d$residuals <- residuals(fit, type = "response")
+
+# Steps 3 and 4: plot the results
+ggplot(d, aes(x = hp, y = vs)) +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+  geom_point(aes(color = residuals)) +
+  scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+  guides(color = FALSE) +
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+Se quisermos apenas marcar os casos que seriam classificados como categoria incorreta, podemos fazer algo como o seguinte (com alguma ajuda da função dplyr, filter()):
+
+```{r}
+ggplot(d, aes(x = hp, y = vs)) +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+  geom_point() +
+
+  # > This plots large red circle on misclassified points
+  geom_point(data = d %>% filter(vs != round(predicted)),
+             color = "red", size = 2) +
+  # <
+
+  scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+  guides(color = FALSE) +
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()
+```
+
+
+ 
+#### Bônus: usando o broom
+
+Esta seção cobrirá brevemente como implementar a função augment() do pacote de broom para a Etapa 2 acima.
+
+O pacote de broom ajuda a “converter objetos de análise estatística de R em quadros de dados organizados”. Em nosso caso, augment() converterá o modelo de regressão ajustado em um dataframe com os valores previstos (ajustados) e residuais já disponíveis.
+
+Um exemplo completo usando augment() é mostrado abaixo. No entanto, existem algumas diferenças importantes sobre os dados retornados por augment() em comparação com a abordagem anterior para observar:
+
+1.  Os nomes dos valores previstos e residuais são *.fitted* e *.resid*
+2.  Existem muitas variáveis adicionais às quais temos acesso. Estas precisam ser descartadas se você deseja implementar a combinação gather() e facet() descrita anteriormente.
+
+```{r}
+library(broom)
+
+# Steps 1 and 2
+d <- lm(mpg ~ hp, data = mtcars) %>% 
+       augment()
+
+head(d)
+
+ggplot(d, aes(x = hp, y = mpg)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +
+  geom_segment(aes(xend = hp, yend = .fitted), alpha = .2) +  # Note `.fitted`
+  geom_point(aes(alpha = abs(.resid))) +  # Note `.resid`
+  guides(alpha = FALSE) +
+  geom_point(aes(y = .fitted), shape = 1) +  # Note `.fitted`
+  theme_bw()
+```
+
+Esta é uma tradução livre do blog [Svbtle](https://drsimonj.svbtle.com/). A publicação orginal pode ser encontrada [neste site](https://drsimonj.svbtle.com/visualising-residuals)
